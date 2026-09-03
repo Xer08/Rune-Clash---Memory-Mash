@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Rune Clash — Memory Tactics</title>
+  <link rel="manifest" href="./manifest.json?v=18">
+  <link rel="stylesheet" href="./css/theme.css?v=18">
+  <link rel="stylesheet" href="./css/board.css?v=18">
+  <link rel="stylesheet" href="./css/effects.css?v=18">
+</head>
+<body>
+<main id="app">
+  <section id="hero-screen" class="screen">
+    <div class="brand">
+      <div class="brand-rune">✦</div>
+      <h1>RUNE CLASH</h1>
+      <p>MEMORY TACTICS</p>
+    </div>
+    <div class="hero-panel">
+      <h2>Elige tu héroe</h2>
+      <div class="hero-grid">
+        <button class="hero-card" data-hero="warrior">
+          <span class="hero-icon">⚔️</span><div class="hero-copy"><strong>Guerrero</strong>
+          <small><b>140 HP · 22 ATQ · 40 MP</b><br><b>↩ Contraataque:</b> 5 MP al recibir daño → devuelve 20%.<br><b>⚡ Golpe Crítico:</b> 100% Carga → ×2.5 daño.</small></div>
+        </button>
+        <button class="hero-card" data-hero="mage">
+          <span class="hero-icon">🔮</span><div class="hero-copy"><strong>Mago</strong>
+          <small><b>90 HP · 18 ATQ · 100 MP</b><br><b>👁 Visión Arcana:</b> 20 MP → revela 2 cartas por 1 s.<br><b>❄ Congelación:</b> 100% Carga → 30 daño + pierde 1 turno.</small></div>
+        </button>
+        <button class="hero-card" data-hero="rogue">
+          <span class="hero-icon">🗡️</span><div class="hero-copy"><strong>Pícaro</strong>
+          <small><b>100 HP · 17 ATQ · 60 MP</b><br><b>🗡 Cuchilla:</b> 10 MP → 10 daño fijo.<br><b>⚔ Asalto Triple:</b> 100% Carga → 3 ataques.<br><b>Pasiva:</b> 20% repetir turno al fallar.</small></div>
+        </button>
+      </div>
+    </div>
+    <p class="tip">10 salas · reliquias · combate por memoria · diseñado para móvil</p>
+  </section>
+
+  <section id="game-screen" class="screen hidden">
+    <header id="combat-hud">
+      <div class="hud-actor">
+        <div class="avatar" id="player-avatar">⚔️</div>
+        <div class="hud-stats">
+          <div class="name-row"><span id="player-name">Héroe</span><span id="player-hp-text">100/100</span></div>
+          <div class="bar"><i id="player-hp-fill"></i></div>
+          <div class="name-row compact"><span>🛡️ Escudo</span><span id="player-shield-text">0</span></div>
+          <div class="bar shield"><i id="player-shield-fill"></i></div>
+          <div class="mana-row mana-visible"><span>💧 MANÁ</span><strong id="mana-text">— MP</strong></div>
+          <div class="bar mana"><i id="mana-fill"></i></div>
+          <div class="mana-row"><span>⚡ CARGA</span><strong id="ultimate-text">0%</strong></div>
+          <div class="bar ultimate"><i id="ultimate-fill"></i></div>
+        </div>
+      </div>
+
+      <div class="hud-center">
+        <div class="room-badge">SALA <b id="room-number">1</b>/10</div>
+        <div class="turn-badge">TURNO <b id="turn-number">1</b></div>
+      </div>
+
+      <div class="hud-actor enemy">
+        <div class="avatar enemy-avatar">👹</div>
+        <div class="hud-stats">
+          <div class="name-row"><span>Enemigo</span><span id="enemy-hp-text">70/70</span></div>
+          <div class="bar enemy-bar"><i id="enemy-hp-fill"></i></div>
+          <div class="enemy-attack">⚔️ <span id="enemy-attack-text">10</span> daño</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="combat-message" id="combat-message">Encuentra una pareja de runas.</div>
+
+    <div id="board" aria-label="Tablero de memoria"></div>
+
+    <footer class="game-footer">
+      <div class="progress-copy"><span id="pairs-text">0/7 parejas</span><span id="relics-text">💎 0</span></div>
+      <button id="hero-ability-btn" class="ability-btn" type="button" disabled aria-label="Habilidad de clase">
+        <span id="ability-icon">✨</span><span id="ability-label">Habilidad</span><b id="ability-cost">0</b>
+      </button>
+      <button id="charged-ability-btn" class="ability-btn hidden" type="button" disabled>
+        <span id="charged-ability-icon">⚡</span><span id="charged-ability-label">Cargada</span><b id="charged-ability-cost">100%</b>
+      </button>
+      <span id="mana-cost-hint" class="ability-hint">—</span>
+      <button id="quit-btn" class="secondary-btn" type="button">Salir</button>
+    </footer>
+  </section>
+</main>
+
+<div id="modal-overlay" class="modal-overlay hidden">
+  <div id="room-modal" class="modal hidden">
+    <div class="modal-rune">✦</div>
+    <h2>¡Sala superada!</h2>
+    <p id="room-summary">Has derrotado al enemigo.</p>
+    <h3>Elige una reliquia</h3>
+    <div id="relics-container" class="relics-container"></div>
+  </div>
+
+  <div id="game-over-modal" class="modal hidden">
+    <div class="modal-rune danger">☠</div>
+    <h2>Game Over</h2>
+    <p>La mazmorra ha reclamado tu runa.</p>
+    <div class="result-grid">
+      <span>Salas</span><b id="final-rooms">0</b>
+      <span>Parejas</span><b id="final-pairs">0</b>
+      <span>Daño</span><b id="final-damage">0</b>
+    </div>
+    <button id="restart-btn" class="primary-btn" type="button">Reintentar</button>
+  </div>
+
+  <div id="victory-modal" class="modal hidden">
+    <div class="modal-rune victory">✦</div>
+    <h2>¡Victoria total!</h2>
+    <p>Has conquistado las 10 salas de Rune Clash.</p>
+    <div class="result-grid">
+      <span>Salas</span><b id="victory-rooms">10</b>
+      <span>Parejas</span><b id="victory-pairs">0</b>
+      <span>Daño</span><b id="victory-damage">0</b>
+    </div>
+    <button id="victory-restart-btn" class="primary-btn" type="button">Nueva partida</button>
+  </div>
+
+  <div id="confirm-modal" class="modal small hidden">
+    <h2>¿Salir de la mazmorra?</h2>
+    <p>Perderás el progreso de esta partida.</p>
+    <div class="modal-actions"><button id="cancel-quit" class="secondary-btn">Continuar</button><button id="confirm-quit" class="primary-btn">Salir</button></div>
+  </div>
+</div>
+
+<script src="./js/state.js?v=18"></script>
+<script src="./js/juiciness.js?v=18"></script>
+<script src="./js/combat.js?v=18"></script>
+<script src="./js/hero.js?v=18"></script>
+<script src="./js/board.js?v=18"></script>
+<script src="./js/dungeon.js?v=18"></script>
+<script src="./js/main.js?v=18"></script>
+</body>
+</html>
