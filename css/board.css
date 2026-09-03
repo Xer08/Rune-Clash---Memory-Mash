@@ -1,0 +1,15 @@
+#board{width:min(92vw,520px);aspect-ratio:1/1;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(7px,2vw,12px);margin:auto 0;perspective:1000px;touch-action:manipulation}
+.card{position:relative;min-width:0;min-height:0;border-radius:14px;cursor:pointer;transform-style:preserve-3d;transition:transform .4s cubic-bezier(.2,.7,.2,1);will-change:transform;user-select:none;-webkit-user-select:none}
+.card.flipped,.card.matched{transform:rotateY(180deg)}
+.card.matched{cursor:default}
+.card-face{position:absolute;inset:0;border-radius:14px;display:grid;place-items:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:translateZ(1px);overflow:hidden}
+.card-back{background:radial-gradient(circle at 50% 45%,#202032,#0d0d16 70%);border:1px solid #303047;box-shadow:inset 0 0 22px #000,0 5px 12px #0008}
+.card-back:before{content:"✦";font-size:clamp(1.1rem,7vw,2rem);color:#454560;text-shadow:0 0 12px #454560}
+.card-front{transform:rotateY(180deg);font-size:clamp(1.7rem,10vw,3.1rem);background:#10101a;border:2px solid currentColor;box-shadow:inset 0 0 20px currentColor,0 0 12px currentColor44}
+.card[data-type="sword"] .card-front{color:var(--sword)}.card[data-type="shield"] .card-front{color:var(--shield)}.card[data-type="potion"] .card-front{color:var(--potion)}.card[data-type="trap"] .card-front{color:var(--trap)}.card[data-type="ultimate"] .card-front{color:var(--ultimate)}
+.card.matched .card-front{box-shadow:inset 0 0 30px currentColor,0 0 24px currentColor}
+.card.temporarily-revealed{transform:rotateY(180deg)}
+.card.locked{pointer-events:none}
+@media(max-height:700px){#board{width:min(86vw,410px);gap:6px}.card-face{border-radius:11px}.game-footer{margin-top:2px}}
+
+.card.temporarily-revealed{transform:rotateY(180deg)}
