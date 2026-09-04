@@ -8,10 +8,21 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
   <title>Rune Clash — Memory Tactics</title>
-  <link rel="manifest" href="./manifest.json?v=18">
-  <link rel="stylesheet" href="./css/theme.css?v=18">
-  <link rel="stylesheet" href="./css/board.css?v=18">
-  <link rel="stylesheet" href="./css/effects.css?v=18">
+  <link rel="manifest" href="./manifest.json?v=19">
+  <link rel="stylesheet" href="./css/theme.css?v=19">
+  <link rel="stylesheet" href="./css/board.css?v=19">
+  <link rel="stylesheet" href="./css/effects.css?v=19">
+
+<style>
+.settings-row{width:min(720px,100%);display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:-10px}
+.settings-btn{min-height:42px;padding:8px 10px;background:#151522;border:2px solid #3f4055;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:.82rem;font-weight:800;box-shadow:0 0 0 1px #ffffff08}
+.settings-btn[aria-pressed="false"]{opacity:.68;border-color:#30313f}
+.settings-icon{font-size:1.05rem}
+.floating-number{font-size:1.55rem!important;font-weight:900!important;text-shadow:0 2px 0 #050509,0 0 14px currentColor!important;z-index:50}
+.combat-message.enemy-turn-message{font-size:1.35rem!important;font-weight:900!important;min-height:32px!important;letter-spacing:.04em;text-shadow:0 0 14px #8a2be2}
+@media(max-width:560px){.settings-row{margin-top:-6px;gap:6px}.settings-btn{min-height:38px;font-size:.72rem;padding:7px 6px}.floating-number{font-size:1.75rem!important}.combat-message.enemy-turn-message{font-size:1.3rem!important;min-height:34px!important}}
+@media(max-width:380px){.settings-btn{font-size:.67rem}.settings-icon{font-size:.95rem}}
+</style>
 </head>
 <body>
 <main id="app">
@@ -37,6 +48,10 @@
           <small><b>100 HP · 17 ATQ · 60 MP</b><br><b>🗡 Cuchilla:</b> 10 MP → 10 daño fijo.<br><b>⚔ Asalto Triple:</b> 100% Carga → 3 ataques.<br><b>Pasiva:</b> 20% repetir turno al fallar.</small></div>
         </button>
       </div>
+    </div>
+    <div class="settings-row" aria-label="Opciones de juego">
+      <button id="vibration-toggle" class="settings-btn" type="button" aria-pressed="true"><span class="settings-icon">📳</span><span>Vibración: ON</span></button>
+      <button id="sound-toggle" class="settings-btn" type="button" aria-pressed="true"><span class="settings-icon">🔊</span><span>Sonido: ON</span></button>
     </div>
     <p class="tip">10 salas · reliquias · combate por memoria · diseñado para móvil</p>
   </section>
@@ -130,12 +145,12 @@
   </div>
 </div>
 
-<script src="./js/state.js?v=18"></script>
-<script src="./js/juiciness.js?v=18"></script>
-<script src="./js/combat.js?v=18"></script>
-<script src="./js/hero.js?v=18"></script>
-<script src="./js/board.js?v=18"></script>
-<script src="./js/dungeon.js?v=18"></script>
-<script src="./js/main.js?v=18"></script>
+<script src="./js/state.js?v=19"></script>
+<script src="./js/juiciness.js?v=19"></script>
+<script src="./js/combat.js?v=19"></script>
+<script src="./js/hero.js?v=19"></script>
+<script src="./js/board.js?v=19"></script>
+<script src="./js/dungeon.js?v=19"></script>
+<script src="./js/main.js?v=19"></script>
 </body>
 </html>

@@ -1,10 +1,10 @@
-const VERSION = "18";
+const VERSION = "19";
 const CACHE_NAME = `rune-clash-v${VERSION}`;
 const ASSETS = [
   "./", "./index.html", "./manifest.json",
-  "./css/theme.css?v=18", "./css/board.css?v=18", "./css/effects.css?v=18",
-  "./js/state.js?v=18", "./js/juiciness.js?v=18", "./js/combat.js?v=18", "./js/hero.js?v=18",
-  "./js/board.js?v=18", "./js/dungeon.js?v=18", "./js/main.js?v=18",
+  "./css/theme.css?v=19", "./css/board.css?v=19", "./css/effects.css?v=19",
+  "./js/state.js?v=19", "./js/juiciness.js?v=19", "./js/combat.js?v=19", "./js/hero.js?v=19",
+  "./js/board.js?v=19", "./js/dungeon.js?v=19", "./js/main.js?v=19",
   "./icon-192.png", "./icon-512.png"
 ];
 
@@ -33,7 +33,7 @@ self.addEventListener("fetch", event => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  const isAppCode = /\\.(html?|css|js)$/.test(url.pathname) || request.mode === "navigate";
+  const isAppCode = /\.(html?|css|js)$/.test(url.pathname) || request.mode === "navigate";
 
   event.respondWith((async () => {
     if (isAppCode) {

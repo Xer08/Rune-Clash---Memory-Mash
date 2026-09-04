@@ -84,6 +84,13 @@ function setupMainEvents(){
   document.addEventListener("cardMatch",()=>incrementTurn());
   document.addEventListener("stateChange",e=>{if(e.detail.state===GameState.GAME_OVER||e.detail.state===GameState.VICTORY)boardLocked=true});
 }
+
+function setupSettingsEvents(){
+  const vb=document.getElementById("vibration-toggle"),sb=document.getElementById("sound-toggle");
+  if(vb)vb.addEventListener("click",()=>setVibrationEnabled(!isVibrationEnabled()));
+  if(sb)sb.addEventListener("click",()=>setSoundEnabled(!isSoundEnabled()));
+}
+
 function preventMobileGestures(){
   document.addEventListener("contextmenu",e=>{if(e.target.closest("#board"))e.preventDefault()});
   document.addEventListener("touchmove",e=>{if(e.target.closest("#board"))e.preventDefault()},{passive:false});
@@ -98,14 +105,14 @@ function registerServiceWorker(){
       window.__swReloaded=true;
       window.location.reload();
     });
-    navigator.serviceWorker.register("./sw.js?v=18",{updateViaCache:"none"})
+    navigator.serviceWorker.register("./sw.js?v=19",{updateViaCache:"none"})
       .then(r=>{
         r.update();
         setTimeout(()=>r.update(),1500);
-        console.log("SW v18 listo",r.scope);
+        console.log("SW v19 listo",r.scope);
       })
       .catch(console.warn);
   });
 }
-document.addEventListener("DOMContentLoaded",()=>{initJuiciness();setupMainEvents();preventMobileGestures();registerServiceWorker()});
+document.addEventListener("DOMContentLoaded",()=>{initJuiciness();setupMainEvents();preventMobileGestures();setupSettingsEvents();updateSettingsUI();registerServiceWorker()});
 Object.assign(window,{startGame,resetRun,exitToHeroSelection,updateTurnDisplay,incrementTurn,startBoardPreview});

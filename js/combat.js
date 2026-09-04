@@ -30,16 +30,9 @@ function resolveRuneEffect(type){
   else if(player.maxMana>0)player.mana=Math.min(player.maxMana,player.mana+5);
   const e=applyRelicBonuses(type,effect);
   if(type==="sword"){
-    let dmg=player.baseAttack+e.damage;
-    let critical=false;
-    if(currentHeroClass==="warrior"&&player.ultimateCharge>=100){
-      dmg=Math.round(dmg*heroClasses.warrior.criticalMultiplier);
-      player.ultimateCharge=0;
-      critical=true;
-    }
+    const dmg=player.baseAttack+e.damage;
     dealDamageToEnemy(dmg);
-    showFloatingText(critical?`⚡ CRÍTICO -${dmg}`:`-${dmg}`,"damage",70,45);
-    if(critical)setCombatMessage(`⚡ ¡Golpe Crítico del Guerrero! ${dmg} de daño.`);
+    showFloatingText(`-${dmg}`,"damage",70,45);
   }
   if(type==="shield"){addShield(e.shield);showFloatingText(`+${e.shield}`,"shield",25,55)}
   if(type==="potion"){healPlayer(e.healing);showFloatingText(`+${e.healing} HP`,"heal",25,45)}
@@ -59,8 +52,12 @@ function healPlayer(amount){
 function takeDamage(amount){
   let remaining=Math.max(0,amount),blocked=0;
   if(player.shield){blocked=Math.min(player.shield,remaining);player.shield-=blocked;remaining-=blocked}
-  if(remaining){player.currentHealth=Math.max(0,player.currentHealth-remaining);gameStats.totalDamageTaken+=remaining}
-  if(typeof playDamageSound==="function")playDamageSound();hapticFeedback("damage");triggerScreenShake();flashScreen();updateCombatUI()
+  if(remaining){
+    player.currentHealth=Math.max(0,player.currentHealth-remaining);
+    gameStats.totalDamageTaken+=remaining;
+    if(typeof playDirectDamageSound==="function")playDirectDamageSound();
+  } else if(blocked>0 && typeof playFullBlockSound==="function")playFullBlockSound();
+  hapticFeedback("damage");triggerScreenShake();flashScreen();updateCombatUI()
 }
 function chargeUltimate(amount){player.ultimateCharge=Math.min(player.maxUltimateCharge,player.ultimateCharge+amount);playChargeSound();hapticFeedback("ultimate");updateAbilityButton()}
 function enemyAttack(){

@@ -102,12 +102,14 @@ function useHeroAbility(){
  if(!canUseHeroAbility())return;
  if(currentHeroClass==="mage"){
    player.mana-=heroClasses.mage.abilityCost;
+   playMysticSound();
    updateCombatUI();
    setCombatMessage("👁️ Visión Arcana: observa 2 runas durante un instante.");
    updateCombatUI();revealRandomCards(2,1000);return;
  }
  if(currentHeroClass==="rogue"){
    player.mana-=heroClasses.rogue.abilityCost;
+   playKnifeSound();
    updateCombatUI();
    const dmg=heroClasses.rogue.abilityDamage;dealDamageToEnemy(dmg);
    showFloatingText(`🗡️ -${dmg}`,"damage",70,45);hapticFeedback("attack");
