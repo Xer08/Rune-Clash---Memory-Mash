@@ -24,10 +24,10 @@ function tone(freq,duration=.12,type="sine",volume=.065,slide=0){
   initAudio(); if(!audioCtx)return;
   const now=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();
   o.type=["sine","square","sawtooth","triangle"].includes(type)?type:"square";o.frequency.setValueAtTime(freq,now);if(slide)o.frequency.linearRampToValueAtTime(freq+slide,now+duration);
-  volume=Math.min(.2,volume*1.35);g.gain.setValueAtTime(volume,now);g.gain.exponentialRampToValueAtTime(.001,now+duration);
+  volume=Math.min(.3,volume*2.0);g.gain.setValueAtTime(volume,now);g.gain.exponentialRampToValueAtTime(.001,now+duration);
   o.connect(g);g.connect(audioCtx.destination);o.start(now);o.stop(now+duration)
 }
-function playButtonSound(){tone(520,.045,"square",.025,-80)}
+function playButtonSound(){tone(520,.045,"square",.04,-80)}
 function playCardFlipSound(){tone(240,.07,"triangle",.035,70)}
 function playMatchSound(){tone(520,.1,"sine",.055,180);setTimeout(()=>tone(780,.12,"sine",.04,100),55)}
 function playMismatchSound(){tone(150,.16,"sawtooth",.035,-60)}

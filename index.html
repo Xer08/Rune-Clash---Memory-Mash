@@ -8,10 +8,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
   <title>Rune Clash — Memory Tactics</title>
-  <link rel="manifest" href="./manifest.json?v=21">
-  <link rel="stylesheet" href="./css/theme.css?v=21">
-  <link rel="stylesheet" href="./css/board.css?v=21">
-  <link rel="stylesheet" href="./css/effects.css?v=21">
+  <link rel="manifest" href="./manifest.json?v=23">
+  <link rel="stylesheet" href="./css/theme.css?v=23">
+  <link rel="stylesheet" href="./css/board.css?v=23">
+  <link rel="stylesheet" href="./css/effects.css?v=23">
 
 <style>
 .settings-row{width:min(720px,100%);display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
@@ -46,6 +46,30 @@ button:hover,button:focus-visible{border-color:#9a9db8!important;box-shadow:0 0 
 #mode-screen{justify-content:center;gap:12px}
 #mode-screen .brand h1{font-size:clamp(1.8rem,8vw,2.7rem)}
 @media(max-width:560px){#mode-screen{gap:8px}.mode-btn{padding:12px}.mode-btn strong{font-size:.9rem}.mode-btn small{font-size:.63rem}.records-panel{padding:8px}.record-class{font-size:.56rem}.record-class b{font-size:.78rem}.menu-tools{gap:5px}.menu-tools-row .settings-btn{font-size:.60rem;min-height:38px;padding:6px 3px}.menu-tools-row .settings-icon{font-size:.9rem}}
+
+/* v23 */
+/* Menú principal: botones más compactos, sin ocupar todo el ancho. */
+#hero-screen .hero-grid{width:min(620px,92%);margin-inline:auto;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+#hero-screen .hero-card{width:100%;font-size:1.12rem!important}
+#hero-screen .hero-card strong{font-size:1.20rem!important}
+#hero-screen .hero-card small{font-size:.84rem!important;line-height:1.38!important}
+#hero-screen .records-panel,#hero-screen .settings-row{width:min(620px,92%);margin-inline:auto}
+/* Evita selección accidental de texto al mantener pulsada la pantalla. */
+html,body,#app,#hero-screen,#mode-screen,#game-screen,#modal-overlay,button,.card,.hero-panel,.hero-card,.mode-btn,.records-panel,.settings-row,.settings-btn,.modal,.relic-card,.combat-message,.game-footer{
+  -webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;-webkit-tap-highlight-color:transparent!important;
+}
+img{-webkit-user-drag:none!important;user-drag:none!important}
+@media(max-width:560px){
+  #hero-screen .hero-grid{width:min(620px,92%);grid-template-columns:1fr!important;gap:7px!important}
+  #hero-screen .hero-card{font-size:1.08rem!important;padding:9px 10px!important}
+  #hero-screen .hero-card strong{font-size:1.10rem!important}
+  #hero-screen .hero-card small{font-size:.75rem!important;line-height:1.30!important}
+  #hero-screen .records-panel,#hero-screen .settings-row{width:92%}
+}
+@media(max-width:380px){
+  #hero-screen .hero-card strong{font-size:1.02rem!important}
+  #hero-screen .hero-card small{font-size:.71rem!important;line-height:1.26!important}
+}
 </style>
 </head>
 <body>
@@ -73,12 +97,6 @@ button:hover,button:focus-visible{border-color:#9a9db8!important;box-shadow:0 0 
         </button>
       </div>
     </div>
-    <div class="settings-row menu-tools-row" aria-label="Opciones de juego">
-      <button id="vibration-toggle" class="settings-btn" type="button" aria-pressed="true"><span class="settings-icon">📳</span><span>Vibración: ON</span></button>
-      <button id="sound-toggle" class="settings-btn" type="button" aria-pressed="true"><span class="settings-icon">🔊</span><span>Sonido: ON</span></button>
-      <button id="help-btn" class="settings-btn menu-tool-btn" type="button"><span class="settings-icon">❓</span><span>Ayuda</span></button>
-      <button id="reset-data-btn" class="settings-btn menu-tool-btn" type="button"><span class="settings-icon">🗑️</span><span>Borrar</span></button>
-    </div>
     <div class="records-panel">
       <h3>🏆 Récords del modo infinito</h3>
       <div class="records-grid">
@@ -86,6 +104,12 @@ button:hover,button:focus-visible{border-color:#9a9db8!important;box-shadow:0 0 
         <div class="record-class">🔮 Mago<b id="record-infinite-mage">Sala 0</b></div>
         <div class="record-class">🗡️ Pícaro<b id="record-infinite-rogue">Sala 0</b></div>
       </div>
+    </div>
+    <div class="settings-row menu-tools-row" aria-label="Opciones de juego">
+      <button id="vibration-toggle" class="settings-btn" type="button" aria-pressed="true"><span class="settings-icon">📳</span><span>Vibración: ON</span></button>
+      <button id="sound-toggle" class="settings-btn" type="button" aria-pressed="true"><span class="settings-icon">🔊</span><span>Sonido: ON</span></button>
+      <button id="help-btn" class="settings-btn menu-tool-btn" type="button"><span class="settings-icon">❓</span><span>Ayuda</span></button>
+      <button id="reset-data-btn" class="settings-btn menu-tool-btn" type="button"><span class="settings-icon">🗑️</span><span>Borrar</span></button>
     </div>
     <p class="tip">Normal · Infinito · reliquias · combate por memoria · diseñado para móvil</p>
   </section>

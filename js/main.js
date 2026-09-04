@@ -4,6 +4,9 @@ let currentGameMode="normal";
 
 function startGame(mode=currentGameMode){
   currentGameMode=mode==="infinite"?"infinite":"normal";
+  const modeScreen=document.getElementById("mode-screen"),gameScreen=document.getElementById("game-screen");
+  if(modeScreen)modeScreen.classList.add("hidden");
+  if(gameScreen)gameScreen.classList.remove("hidden");
   if(previewTimer){clearTimeout(previewTimer);previewTimer=null}
   // Reinicializamos la sala y, al FINAL de todos los resets, aplicamos los
   // valores de la clase. Así ninguna rutina de arranque puede borrar el MP.
@@ -38,7 +41,7 @@ function startBoardPreview(){
     boardLocked=false;
     previewTimer=null;
     setCombatMessage("¡Tu turno! Encuentra una pareja.");
-  },500);
+  },700);
 }
 
 function updateTurnDisplay(){const el=document.getElementById("turn-number");if(el)el.textContent=currentTurn}
@@ -134,17 +137,22 @@ function registerServiceWorker(){
       window.__swReloaded=true;
       window.location.reload();
     });
-    navigator.serviceWorker.register("./sw.js?v=20",{updateViaCache:"none"})
+    navigator.serviceWorker.register("./sw.js?v=23",{updateViaCache:"none"})
       .then(r=>{
         r.update();
         setTimeout(()=>r.update(),1500);
-        console.log("SW v20 listo",r.scope);
+        console.log("SW v23 listo",r.scope);
       })
       .catch(console.warn);
   });
 }
 document.addEventListener("DOMContentLoaded",()=>{
   initJuiciness();setupMainEvents();preventMobileGestures();setupSettingsEvents();updateSettingsUI();registerServiceWorker();
+  document.addEventListener("selectstart",e=>{if(!e.target.closest('input,textarea,[contenteditable="true"]'))e.preventDefault()});
+  document.addEventListener("contextmenu",e=>{if(!e.target.closest('input,textarea,[contenteditable="true"]'))e.preventDefault()});
+  document.addEventListener("dragstart",e=>e.preventDefault());
+  document.addEventListener("copy",e=>e.preventDefault());
+  document.addEventListener("cut",e=>e.preventDefault());
   document.addEventListener("click",e=>{const b=e.target.closest("button");if(b&&!b.classList.contains("card"))playButtonSound()});
 });
 Object.assign(window,{startGame,resetRun,exitToHeroSelection,updateTurnDisplay,incrementTurn,startBoardPreview,updateInfiniteRecordsUI,clearAllGameData,currentGameMode});

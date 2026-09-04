@@ -38,3 +38,9 @@ La interfaz utiliza **Pixelify Sans**, una tipografía pixel art cargada como we
 - Opción para borrar todos los datos guardados con confirmación.
 - Sonido breve para botones de interfaz; el sonido de las cartas se mantiene separado.
 - Bordes de alto contraste para botones y opciones.
+
+
+### v23
+- Menú principal con botones más compactos y texto más legible.
+- Bloqueo de selección/copia accidental de texto al mantener pulsada la pantalla.
+- Mantiene el volumen global elevado de v22 y los sonidos de botones sin alterar los sonidos de cartas.
