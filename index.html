@@ -8,25 +8,44 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
   <title>Rune Clash — Memory Tactics</title>
-  <link rel="manifest" href="./manifest.json?v=20">
-  <link rel="stylesheet" href="./css/theme.css?v=20">
-  <link rel="stylesheet" href="./css/board.css?v=20">
-  <link rel="stylesheet" href="./css/effects.css?v=20">
+  <link rel="manifest" href="./manifest.json?v=21">
+  <link rel="stylesheet" href="./css/theme.css?v=21">
+  <link rel="stylesheet" href="./css/board.css?v=21">
+  <link rel="stylesheet" href="./css/effects.css?v=21">
 
 <style>
-.settings-row{width:min(720px,100%);display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.settings-row{width:min(720px,100%);display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
 .settings-btn{min-height:42px;padding:8px 10px;background:#151522;border:2px solid #3f4055;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:.82rem;font-weight:800;box-shadow:0 0 0 1px #ffffff08}
 .settings-btn[aria-pressed="false"]{opacity:.68;border-color:#30313f}
 .settings-icon{font-size:1.05rem}
 .floating-number{font-size:1.55rem!important;font-weight:900!important;text-shadow:0 2px 0 #050509,0 0 14px currentColor!important;z-index:50}
 .combat-message.enemy-turn-message{font-size:1.35rem!important;font-weight:900!important;min-height:32px!important;letter-spacing:.04em;text-shadow:0 0 14px #8a2be2}
-@media(max-width:560px){.settings-row{margin-top:6px;gap:6px}.settings-btn{min-height:38px;font-size:.72rem;padding:7px 6px}.floating-number{font-size:1.75rem!important}.combat-message.enemy-turn-message{font-size:1.3rem!important;min-height:34px!important}}
+@media(max-width:560px){.settings-row{margin-top:6px;gap:5px}.settings-btn{min-height:38px;font-size:.72rem;padding:7px 6px}.floating-number{font-size:1.75rem!important}.combat-message.enemy-turn-message{font-size:1.3rem!important;min-height:34px!important}}
 @media(max-width:380px){.settings-btn{font-size:.67rem}.settings-icon{font-size:.95rem}}
 #hero-screen .hero-grid{grid-template-columns:1fr!important;gap:8px!important;width:min(720px,100%)}
 #hero-screen .hero-card{width:100%;min-height:0}
 #hero-screen .settings-row{margin-top:10px}
 #game-screen.charged-flash::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;background:var(--charged-flash-color);opacity:0;animation:chargedAbilityFlash .22s ease-out forwards}
 @keyframes chargedAbilityFlash{0%{opacity:.72}100%{opacity:0}}
+
+/* v21 */
+#hero-screen .hero-card small{font-size:.75rem!important;line-height:1.35}
+@media(max-width:560px){#hero-screen .hero-card small{font-size:.60rem!important;line-height:1.22}}
+@media(max-width:380px){#hero-screen .hero-card small{font-size:.54rem!important;line-height:1.15}}
+button{border:2px solid #55586f!important;box-shadow:0 0 0 1px #ffffff10,0 0 10px #ffffff0a}
+button:hover,button:focus-visible{border-color:#9a9db8!important;box-shadow:0 0 0 2px #ffffff12,0 0 16px #ffffff18;outline:none}
+.hero-card:active,.relic-card:active,.settings-btn:active,.primary-btn:active,.secondary-btn:active,.ability-btn:active{border-color:var(--ultimate)!important}
+.mode-panel{width:min(720px,100%);display:grid;gap:10px}
+.mode-btn{width:100%;padding:14px 16px;background:linear-gradient(145deg,#1b1b2a,#12121d);border-radius:14px;text-align:left}
+.mode-btn strong{display:block;font-size:1.05rem;margin-bottom:4px}.mode-btn small{display:block;color:var(--muted);font-size:.72rem;line-height:1.4}
+.back-menu-btn{margin-top:2px}
+.records-panel{width:min(720px,100%);padding:10px 12px;background:#11111b;border:2px solid #55586f;border-radius:16px;text-align:center}
+.records-panel h3{margin:0 0 7px;font-size:.82rem}.records-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.record-class{background:#0a0a10;border-radius:10px;padding:7px 4px;font-size:.62rem}.record-class b{display:block;font-size:.9rem;margin-top:3px;color:var(--ultimate)}
+.menu-tools{width:min(720px,100%);display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:2px}.menu-tool-btn{min-height:42px;padding:7px 5px;background:#151522;border-radius:12px;font-size:.72rem;font-weight:800;display:flex;align-items:center;justify-content:center;gap:5px}.menu-tools-row .settings-btn{min-width:0}
+.help-modal .help-list{text-align:left;margin:12px 0 0;padding:0;list-style:none}.help-modal .help-list li{padding:7px 0;border-bottom:1px solid #2a2a3c;font-size:.73rem;line-height:1.35}.help-modal .help-list li:last-child{border-bottom:0}.help-modal .help-list b{font-size:.9rem;margin-right:5px}
+#mode-screen{justify-content:center;gap:12px}
+#mode-screen .brand h1{font-size:clamp(1.8rem,8vw,2.7rem)}
+@media(max-width:560px){#mode-screen{gap:8px}.mode-btn{padding:12px}.mode-btn strong{font-size:.9rem}.mode-btn small{font-size:.63rem}.records-panel{padding:8px}.record-class{font-size:.56rem}.record-class b{font-size:.78rem}.menu-tools{gap:5px}.menu-tools-row .settings-btn{font-size:.60rem;min-height:38px;padding:6px 3px}.menu-tools-row .settings-icon{font-size:.9rem}}
 </style>
 </head>
 <body>
@@ -54,11 +73,34 @@
         </button>
       </div>
     </div>
-    <div class="settings-row" aria-label="Opciones de juego">
+    <div class="settings-row menu-tools-row" aria-label="Opciones de juego">
       <button id="vibration-toggle" class="settings-btn" type="button" aria-pressed="true"><span class="settings-icon">📳</span><span>Vibración: ON</span></button>
       <button id="sound-toggle" class="settings-btn" type="button" aria-pressed="true"><span class="settings-icon">🔊</span><span>Sonido: ON</span></button>
+      <button id="help-btn" class="settings-btn menu-tool-btn" type="button"><span class="settings-icon">❓</span><span>Ayuda</span></button>
+      <button id="reset-data-btn" class="settings-btn menu-tool-btn" type="button"><span class="settings-icon">🗑️</span><span>Borrar</span></button>
     </div>
-    <p class="tip">10 salas · reliquias · combate por memoria · diseñado para móvil</p>
+    <div class="records-panel">
+      <h3>🏆 Récords del modo infinito</h3>
+      <div class="records-grid">
+        <div class="record-class">⚔️ Guerrero<b id="record-infinite-warrior">Sala 0</b></div>
+        <div class="record-class">🔮 Mago<b id="record-infinite-mage">Sala 0</b></div>
+        <div class="record-class">🗡️ Pícaro<b id="record-infinite-rogue">Sala 0</b></div>
+      </div>
+    </div>
+    <p class="tip">Normal · Infinito · reliquias · combate por memoria · diseñado para móvil</p>
+  </section>
+
+  <section id="mode-screen" class="screen hidden">
+    <div class="brand">
+      <div class="brand-rune">✦</div>
+      <h1>ELIGE EL MODO</h1>
+      <p>RUNE CLASH · MEMORY TACTICS</p>
+    </div>
+    <div class="hero-panel mode-panel">
+      <button id="normal-mode-btn" class="mode-btn" type="button"><strong>⚔️ Normal</strong><small>Conquista las 10 salas de la mazmorra. Los enemigos escalan y puedes elegir reliquias entre salas.</small></button>
+      <button id="infinite-mode-btn" class="mode-btn" type="button"><strong>♾️ Infinito</strong><small>Juega sin límite de salas. Los enemigos siguen aumentando su poder hasta que seas derrotado.</small></button>
+      <button id="back-to-heroes-btn" class="secondary-btn back-menu-btn" type="button">← Cambiar de héroe</button>
+    </div>
   </section>
 
   <section id="game-screen" class="screen hidden">
@@ -78,7 +120,7 @@
       </div>
 
       <div class="hud-center">
-        <div class="room-badge">SALA <b id="room-number">1</b>/10</div>
+        <div class="room-badge">SALA <b id="room-number">1</b><span id="room-limit">/10</span></div>
         <div class="turn-badge">TURNO <b id="turn-number">1</b></div>
       </div>
 
@@ -148,14 +190,37 @@
     <p>Perderás el progreso de esta partida.</p>
     <div class="modal-actions"><button id="cancel-quit" class="secondary-btn">Continuar</button><button id="confirm-quit" class="primary-btn">Salir</button></div>
   </div>
+
+  <div id="help-modal" class="modal help-modal hidden">
+    <div class="modal-rune">❓</div>
+    <h2>¿Cómo jugar?</h2>
+    <p>Encuentra parejas de la misma runa. Cada pareja activa su efecto y te acerca a derrotar al enemigo.</p>
+    <ul class="help-list">
+      <li><b>⚔️</b><strong>Espada:</strong> hace daño al enemigo.</li>
+      <li><b>🛡️</b><strong>Escudo:</strong> añade protección para reducir el próximo daño.</li>
+      <li><b>🧪</b><strong>Poción:</strong> recupera vida.</li>
+      <li><b>☠️</b><strong>Trampa:</strong> te hace daño; algunas reliquias pueden reducirlo.</li>
+      <li><b>⚡</b><strong>Ultimate:</strong> llena tu Carga para usar la habilidad especial de tu clase al 100%.</li>
+      <li><b>💧</b><strong>Maná:</strong> las parejas recuperan 5 MP; las habilidades gastan MP.</li>
+      <li><b>💎</b><strong>Reliquias:</strong> elige una entre salas para mejorar tu héroe.</li>
+    </ul>
+    <button id="close-help-btn" class="primary-btn" type="button">Entendido</button>
+  </div>
+
+  <div id="reset-data-modal" class="modal small hidden">
+    <div class="modal-rune danger">🗑️</div>
+    <h2>¿Borrar todos los datos?</h2>
+    <p>Se eliminarán los récords y la configuración guardada. Esta acción no se puede deshacer.</p>
+    <div class="modal-actions"><button id="cancel-reset-data" class="secondary-btn" type="button">Cancelar</button><button id="confirm-reset-data" class="primary-btn" type="button">Sí, borrar</button></div>
+  </div>
 </div>
 
-<script src="./js/state.js?v=20"></script>
-<script src="./js/juiciness.js?v=20"></script>
-<script src="./js/combat.js?v=20"></script>
-<script src="./js/hero.js?v=20"></script>
-<script src="./js/board.js?v=20"></script>
-<script src="./js/dungeon.js?v=20"></script>
-<script src="./js/main.js?v=20"></script>
+<script src="./js/state.js?v=21"></script>
+<script src="./js/juiciness.js?v=21"></script>
+<script src="./js/combat.js?v=21"></script>
+<script src="./js/hero.js?v=21"></script>
+<script src="./js/board.js?v=21"></script>
+<script src="./js/dungeon.js?v=21"></script>
+<script src="./js/main.js?v=21"></script>
 </body>
 </html>

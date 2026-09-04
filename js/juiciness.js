@@ -27,6 +27,7 @@ function tone(freq,duration=.12,type="sine",volume=.065,slide=0){
   volume=Math.min(.2,volume*1.35);g.gain.setValueAtTime(volume,now);g.gain.exponentialRampToValueAtTime(.001,now+duration);
   o.connect(g);g.connect(audioCtx.destination);o.start(now);o.stop(now+duration)
 }
+function playButtonSound(){tone(520,.045,"square",.025,-80)}
 function playCardFlipSound(){tone(240,.07,"triangle",.035,70)}
 function playMatchSound(){tone(520,.1,"sine",.055,180);setTimeout(()=>tone(780,.12,"sine",.04,100),55)}
 function playMismatchSound(){tone(150,.16,"sawtooth",.035,-60)}
@@ -67,4 +68,4 @@ function flashChargedAbility(heroClass){
   window.__chargedFlashCleanup=setTimeout(()=>el.classList.remove("charged-flash"),220);
 }
 function initJuiciness(){const once=()=>initAudio();document.addEventListener("pointerdown",once,{once:true})}
-Object.assign(window,{initAudio,initJuiciness,playCardFlipSound,playMatchSound,playMismatchSound,playAttackSound,playDamageSound,playDirectDamageSound,playFullBlockSound,playKnifeSound,playMysticSound,playShieldSound,playHealSound,playChargeSound,playRevealSound,playVictorySound,playGameOverSound,hapticFeedback,showFloatingText,triggerScreenShake,flashScreen,flashChargedAbility,setSoundEnabled,setVibrationEnabled,isSoundEnabled,isVibrationEnabled,updateSettingsUI});
+Object.assign(window,{initAudio,initJuiciness,playButtonSound,playCardFlipSound,playMatchSound,playMismatchSound,playAttackSound,playDamageSound,playDirectDamageSound,playFullBlockSound,playKnifeSound,playMysticSound,playShieldSound,playHealSound,playChargeSound,playRevealSound,playVictorySound,playGameOverSound,hapticFeedback,showFloatingText,triggerScreenShake,flashScreen,flashChargedAbility,setSoundEnabled,setVibrationEnabled,isSoundEnabled,isVibrationEnabled,updateSettingsUI});

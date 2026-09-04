@@ -148,8 +148,27 @@ function setCombatMessage(msg){
   el.textContent=msg;
   el.classList.toggle("enemy-turn-message",String(msg).includes("TURNO DEL ENEMIGO"));
 }
-function handleRoomComplete(){gameStats.roomsCleared=Math.max(gameStats.roomsCleared,getCurrentRoom());if(getCurrentRoom()>=10){setTimeout(showVictoryModal,450);playVictorySound();hapticFeedback("victory")}else setTimeout(showRoomModal,450)}
-function showGameOverModal(){text("final-rooms",gameStats.roomsCleared);text("final-pairs",gameStats.pairsMatched);text("final-damage",gameStats.totalDamageDealt);showModal("game-over-modal");playGameOverSound();hapticFeedback("gameOver")}
+function saveInfiniteRecord(room){
+ if(typeof currentGameMode==="undefined"||currentGameMode!=="infinite"||!currentHeroClass)return;
+ const key="runeClashInfiniteRecords";
+ let records={warrior:0,mage:0,rogue:0};
+ try{records={...records,...JSON.parse(localStorage.getItem(key)||"{}")}}catch(e){}
+ records[currentHeroClass]=Math.max(Number(records[currentHeroClass])||0,Number(room)||0);
+ localStorage.setItem(key,JSON.stringify(records));
+ if(typeof updateInfiniteRecordsUI==="function")updateInfiniteRecordsUI();
+}
+function handleRoomComplete(){
+ gameStats.roomsCleared=Math.max(gameStats.roomsCleared,getCurrentRoom());
+ if(typeof currentGameMode!=="undefined"&&currentGameMode==="infinite"){
+   saveInfiniteRecord(getCurrentRoom());
+   setTimeout(showRoomModal,450);
+ }else if(getCurrentRoom()>=10){
+   setTimeout(showVictoryModal,450);playVictorySound();hapticFeedback("victory");
+ }else setTimeout(showRoomModal,450)
+}
+function showGameOverModal(){
+ if(typeof currentGameMode!=="undefined"&&currentGameMode==="infinite")saveInfiniteRecord(getCurrentRoom());
+ text("final-rooms",Math.max(gameStats.roomsCleared,getCurrentRoom()));text("final-pairs",gameStats.pairsMatched);text("final-damage",gameStats.totalDamageDealt);showModal("game-over-modal");playGameOverSound();hapticFeedback("gameOver")}
 function showVictoryModal(){text("victory-rooms",gameStats.roomsCleared);text("victory-pairs",gameStats.pairsMatched);text("victory-damage",gameStats.totalDamageDealt);showModal("victory-modal")}
 function showModal(id){document.getElementById("modal-overlay").classList.remove("hidden");document.querySelectorAll("#modal-overlay .modal").forEach(m=>m.classList.add("hidden"));document.getElementById(id).classList.remove("hidden")}
 function hideModals(){document.getElementById("modal-overlay").classList.add("hidden");document.querySelectorAll("#modal-overlay .modal").forEach(m=>m.classList.add("hidden"))}

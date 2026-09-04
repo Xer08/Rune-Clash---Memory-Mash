@@ -1,7 +1,9 @@
 let currentTurn=1;
 let previewTimer=null;
+let currentGameMode="normal";
 
-function startGame(){
+function startGame(mode=currentGameMode){
+  currentGameMode=mode==="infinite"?"infinite":"normal";
   if(previewTimer){clearTimeout(previewTimer);previewTimer=null}
   // Reinicializamos la sala y, al FINAL de todos los resets, aplicamos los
   // valores de la clase. Así ninguna rutina de arranque puede borrar el MP.
@@ -43,6 +45,8 @@ function updateTurnDisplay(){const el=document.getElementById("turn-number");if(
 function incrementTurn(){currentTurn++;updateTurnDisplay()}
 function resetRun(){
   hideModals();
+  document.getElementById("mode-screen").classList.add("hidden");
+  document.getElementById("game-screen").classList.remove("hidden");
   resetPlayer();
   applyHeroStats();
   initializeDungeon();
@@ -74,6 +78,9 @@ function exitToHeroSelection(){
 }
 function setupMainEvents(){
   initializeHeroSelection();
+  document.getElementById("normal-mode-btn").addEventListener("click",()=>{currentGameMode="normal";startGame("normal")});
+  document.getElementById("infinite-mode-btn").addEventListener("click",()=>{currentGameMode="infinite";startGame("infinite")});
+  document.getElementById("back-to-heroes-btn").addEventListener("click",()=>{document.getElementById("mode-screen").classList.add("hidden");document.getElementById("hero-screen").classList.remove("hidden");resetHero()});
   document.getElementById("hero-ability-btn").addEventListener("click",useHeroAbility);
   document.getElementById("charged-ability-btn").addEventListener("click",useChargedAbility);
   document.getElementById("restart-btn").addEventListener("click",resetRun);
@@ -83,6 +90,28 @@ function setupMainEvents(){
   document.getElementById("confirm-quit").addEventListener("click",exitToHeroSelection);
   document.addEventListener("cardMatch",()=>incrementTurn());
   document.addEventListener("stateChange",e=>{if(e.detail.state===GameState.GAME_OVER||e.detail.state===GameState.VICTORY)boardLocked=true});
+  document.getElementById("help-btn").addEventListener("click",()=>showModal("help-modal"));
+  document.getElementById("close-help-btn").addEventListener("click",hideModals);
+  document.getElementById("reset-data-btn").addEventListener("click",()=>showModal("reset-data-modal"));
+  document.getElementById("cancel-reset-data").addEventListener("click",hideModals);
+  document.getElementById("confirm-reset-data").addEventListener("click",clearAllGameData);
+  updateInfiniteRecordsUI();
+}
+
+function updateInfiniteRecordsUI(){
+  let records={warrior:0,mage:0,rogue:0};
+  try{records={...records,...JSON.parse(localStorage.getItem("runeClashInfiniteRecords")||"{}")}}catch(e){}
+  ["warrior","mage","rogue"].forEach(k=>{const el=document.getElementById(`record-infinite-${k}`);if(el)el.textContent=`Sala ${Number(records[k])||0}`});
+}
+function clearAllGameData(){
+  localStorage.clear();
+  if(typeof setSoundEnabled==="function")setSoundEnabled(true);
+  if(typeof setVibrationEnabled==="function")setVibrationEnabled(true);
+  updateSettingsUI();updateInfiniteRecordsUI();hideModals();
+  resetHero();
+  document.getElementById("game-screen").classList.add("hidden");
+  document.getElementById("mode-screen").classList.add("hidden");
+  document.getElementById("hero-screen").classList.remove("hidden");
 }
 
 function setupSettingsEvents(){
@@ -114,5 +143,8 @@ function registerServiceWorker(){
       .catch(console.warn);
   });
 }
-document.addEventListener("DOMContentLoaded",()=>{initJuiciness();setupMainEvents();preventMobileGestures();setupSettingsEvents();updateSettingsUI();registerServiceWorker()});
-Object.assign(window,{startGame,resetRun,exitToHeroSelection,updateTurnDisplay,incrementTurn,startBoardPreview});
+document.addEventListener("DOMContentLoaded",()=>{
+  initJuiciness();setupMainEvents();preventMobileGestures();setupSettingsEvents();updateSettingsUI();registerServiceWorker();
+  document.addEventListener("click",e=>{const b=e.target.closest("button");if(b&&!b.classList.contains("card"))playButtonSound()});
+});
+Object.assign(window,{startGame,resetRun,exitToHeroSelection,updateTurnDisplay,incrementTurn,startBoardPreview,updateInfiniteRecordsUI,clearAllGameData,currentGameMode});

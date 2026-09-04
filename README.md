@@ -28,3 +28,13 @@ Abre `index.html` mediante un servidor local o publícalo en GitHub Pages. El Se
 
 ## Créditos de tipografía
 La interfaz utiliza **Pixelify Sans**, una tipografía pixel art cargada como webfont. Se aplica de forma global a HUD, botones, diálogos, números, efectos flotantes y textos de combate.
+
+
+## v21
+- Selección de modo después de elegir héroe: Normal (10 salas) e Infinito (sin límite).
+- Escalado de enemigos del 15% por sala en ambos modos.
+- Récords de sala máxima del modo Infinito guardados por clase.
+- Panel de ayuda para nuevos jugadores con explicación resumida de runas y efectos.
+- Opción para borrar todos los datos guardados con confirmación.
+- Sonido breve para botones de interfaz; el sonido de las cartas se mantiene separado.
+- Bordes de alto contraste para botones y opciones.

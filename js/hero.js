@@ -32,7 +32,13 @@ const relicDefinitions={
  battleCharm:{name:"Talismán de Batalla",description:"+3 ataque base permanente.",icon:"🗡️",effect:"attackBonus",value:3}
 };
 function initializeHeroSelection(){document.querySelectorAll(".hero-card").forEach(c=>c.addEventListener("click",()=>selectHero(c.dataset.hero)))}
-function selectHero(hero){if(!heroClasses[hero])return;currentHeroClass=hero;window.currentHeroClass=currentHeroClass;applyHeroStats();document.getElementById("hero-screen").classList.add("hidden");document.getElementById("game-screen").classList.remove("hidden");startGame()}
+function selectHero(hero){
+ if(!heroClasses[hero])return;
+ currentHeroClass=hero;window.currentHeroClass=currentHeroClass;
+ applyHeroStats();
+ document.getElementById("hero-screen").classList.add("hidden");
+ document.getElementById("mode-screen").classList.remove("hidden");
+}
 function applyHeroStats(){
  const h=heroClasses[currentHeroClass];
  Object.assign(player,{maxHealth:h.maxHealth,currentHealth:h.maxHealth,shield:0,baseAttack:h.attack,ultimateCharge:0,maxUltimateCharge:100,mana:h.maxMana||0,maxMana:h.maxMana||0});
