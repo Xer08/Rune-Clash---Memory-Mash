@@ -8,20 +8,25 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
   <title>Rune Clash — Memory Tactics</title>
-  <link rel="manifest" href="./manifest.json?v=19">
-  <link rel="stylesheet" href="./css/theme.css?v=19">
-  <link rel="stylesheet" href="./css/board.css?v=19">
-  <link rel="stylesheet" href="./css/effects.css?v=19">
+  <link rel="manifest" href="./manifest.json?v=20">
+  <link rel="stylesheet" href="./css/theme.css?v=20">
+  <link rel="stylesheet" href="./css/board.css?v=20">
+  <link rel="stylesheet" href="./css/effects.css?v=20">
 
 <style>
-.settings-row{width:min(720px,100%);display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:-10px}
+.settings-row{width:min(720px,100%);display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
 .settings-btn{min-height:42px;padding:8px 10px;background:#151522;border:2px solid #3f4055;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:.82rem;font-weight:800;box-shadow:0 0 0 1px #ffffff08}
 .settings-btn[aria-pressed="false"]{opacity:.68;border-color:#30313f}
 .settings-icon{font-size:1.05rem}
 .floating-number{font-size:1.55rem!important;font-weight:900!important;text-shadow:0 2px 0 #050509,0 0 14px currentColor!important;z-index:50}
 .combat-message.enemy-turn-message{font-size:1.35rem!important;font-weight:900!important;min-height:32px!important;letter-spacing:.04em;text-shadow:0 0 14px #8a2be2}
-@media(max-width:560px){.settings-row{margin-top:-6px;gap:6px}.settings-btn{min-height:38px;font-size:.72rem;padding:7px 6px}.floating-number{font-size:1.75rem!important}.combat-message.enemy-turn-message{font-size:1.3rem!important;min-height:34px!important}}
+@media(max-width:560px){.settings-row{margin-top:6px;gap:6px}.settings-btn{min-height:38px;font-size:.72rem;padding:7px 6px}.floating-number{font-size:1.75rem!important}.combat-message.enemy-turn-message{font-size:1.3rem!important;min-height:34px!important}}
 @media(max-width:380px){.settings-btn{font-size:.67rem}.settings-icon{font-size:.95rem}}
+#hero-screen .hero-grid{grid-template-columns:1fr!important;gap:8px!important;width:min(720px,100%)}
+#hero-screen .hero-card{width:100%;min-height:0}
+#hero-screen .settings-row{margin-top:10px}
+#game-screen.charged-flash::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;background:var(--charged-flash-color);opacity:0;animation:chargedAbilityFlash .22s ease-out forwards}
+@keyframes chargedAbilityFlash{0%{opacity:.72}100%{opacity:0}}
 </style>
 </head>
 <body>
@@ -145,12 +150,12 @@
   </div>
 </div>
 
-<script src="./js/state.js?v=19"></script>
-<script src="./js/juiciness.js?v=19"></script>
-<script src="./js/combat.js?v=19"></script>
-<script src="./js/hero.js?v=19"></script>
-<script src="./js/board.js?v=19"></script>
-<script src="./js/dungeon.js?v=19"></script>
-<script src="./js/main.js?v=19"></script>
+<script src="./js/state.js?v=20"></script>
+<script src="./js/juiciness.js?v=20"></script>
+<script src="./js/combat.js?v=20"></script>
+<script src="./js/hero.js?v=20"></script>
+<script src="./js/board.js?v=20"></script>
+<script src="./js/dungeon.js?v=20"></script>
+<script src="./js/main.js?v=20"></script>
 </body>
 </html>

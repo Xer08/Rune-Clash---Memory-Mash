@@ -105,11 +105,11 @@ function registerServiceWorker(){
       window.__swReloaded=true;
       window.location.reload();
     });
-    navigator.serviceWorker.register("./sw.js?v=19",{updateViaCache:"none"})
+    navigator.serviceWorker.register("./sw.js?v=20",{updateViaCache:"none"})
       .then(r=>{
         r.update();
         setTimeout(()=>r.update(),1500);
-        console.log("SW v19 listo",r.scope);
+        console.log("SW v20 listo",r.scope);
       })
       .catch(console.warn);
   });

@@ -118,6 +118,7 @@ function useHeroAbility(){
 }
 function useChargedAbility(){
  if(!canUseChargedAbility())return;
+ flashChargedAbility(currentHeroClass);
  if(currentHeroClass==="warrior"){
    player.ultimateCharge=0;
    const dmg=Math.round((player.baseAttack+runeEffects.sword.damage)*heroClasses.warrior.criticalMultiplier);

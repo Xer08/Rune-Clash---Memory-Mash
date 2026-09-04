@@ -4,7 +4,12 @@ let vibrationEnabled=localStorage.getItem("runeClashVibration")!=="off";
 function isSoundEnabled(){return soundEnabled}
 function isVibrationEnabled(){return vibrationEnabled}
 function setSoundEnabled(enabled){soundEnabled=!!enabled;localStorage.setItem("runeClashSound",soundEnabled?"on":"off");updateSettingsUI()}
-function setVibrationEnabled(enabled){vibrationEnabled=!!enabled;localStorage.setItem("runeClashVibration",vibrationEnabled?"on":"off");updateSettingsUI()}
+function setVibrationEnabled(enabled){
+  vibrationEnabled=!!enabled;
+  localStorage.setItem("runeClashVibration",vibrationEnabled?"on":"off");
+  updateSettingsUI();
+  if(vibrationEnabled)hapticFeedback("test");
+}
 function updateSettingsUI(){
   const sb=document.getElementById("sound-toggle"),vb=document.getElementById("vibration-toggle");
   if(sb){sb.setAttribute("aria-pressed",String(soundEnabled));sb.innerHTML=`<span class="settings-icon">${soundEnabled?"🔊":"🔇"}</span><span>${soundEnabled?"Sonido: ON":"Sonido: OFF"}</span>`}
@@ -38,9 +43,9 @@ function playRevealSound(){tone(700,.12,"sine",.035,-180)}
 function playVictorySound(){[0,90,180,270].forEach((d,i)=>setTimeout(()=>tone(420+i*100,.18,"sine",.05,80),d))}
 function playGameOverSound(){tone(120,.28,"sawtooth",.045,-60);setTimeout(()=>tone(80,.35,"triangle",.035,-30),180)}
 function hapticFeedback(type){
-  if(!vibrationEnabled||!navigator.vibrate)return;
-  const patterns={cardFlip:30,match:[40,40,40],mismatch:[20,30,20],damage:150,heal:[50,30,50],shield:[30,20,30],ultimate:[80,40,80],victory:[200,80,200],gameOver:[300,150,300],dodge:[20,10,20]};
-  navigator.vibrate(patterns[type]||25)
+  if(!vibrationEnabled||typeof navigator.vibrate!=="function")return false;
+  const patterns={test:70,cardFlip:30,match:[40,40,40],mismatch:[20,30,20],damage:150,heal:[50,30,50],shield:[30,20,30],ultimate:[80,40,80],victory:[200,80,200],gameOver:[300,150,300],dodge:[20,10,20]};
+  try{navigator.vibrate(0);const ok=navigator.vibrate(patterns[type]||25);return ok!==false}catch(e){return false}
 }
 function showFloatingText(text,type="damage",x=50,y=50){
   const el=document.createElement("div");el.className=`floating-number ${type}`;el.textContent=text;el.style.left=`${x}%`;el.style.top=`${y}%`;document.body.appendChild(el);setTimeout(()=>el.remove(),900)
@@ -52,6 +57,14 @@ function triggerScreenShake(){
   clearTimeout(window.__shakeCleanup);
   window.__shakeCleanup=setTimeout(()=>el.classList.remove("screen-shake"),380);
 }
-function flashScreen(){const el=document.getElementById("game-screen");el.classList.add("hit-flash");setTimeout(()=>el.classList.remove("hit-flash"),250)}
+function flashScreen(){const el=document.getElementById("game-screen");if(!el)return;el.classList.remove("hit-flash");void el.offsetWidth;el.classList.add("hit-flash");setTimeout(()=>el.classList.remove("hit-flash"),250)}
+function flashChargedAbility(heroClass){
+  const el=document.getElementById("game-screen");if(!el)return;
+  const colors={warrior:"rgba(255,40,40,.72)",mage:"rgba(40,120,255,.72)",rogue:"rgba(180,60,255,.72)"};
+  el.style.setProperty("--charged-flash-color",colors[heroClass]||"rgba(255,255,255,.7)");
+  el.classList.remove("charged-flash");void el.offsetWidth;el.classList.add("charged-flash");
+  clearTimeout(window.__chargedFlashCleanup);
+  window.__chargedFlashCleanup=setTimeout(()=>el.classList.remove("charged-flash"),220);
+}
 function initJuiciness(){const once=()=>initAudio();document.addEventListener("pointerdown",once,{once:true})}
-Object.assign(window,{initAudio,initJuiciness,playCardFlipSound,playMatchSound,playMismatchSound,playAttackSound,playDamageSound,playDirectDamageSound,playFullBlockSound,playKnifeSound,playMysticSound,playShieldSound,playHealSound,playChargeSound,playRevealSound,playVictorySound,playGameOverSound,hapticFeedback,showFloatingText,triggerScreenShake,flashScreen,setSoundEnabled,setVibrationEnabled,isSoundEnabled,isVibrationEnabled,updateSettingsUI});
+Object.assign(window,{initAudio,initJuiciness,playCardFlipSound,playMatchSound,playMismatchSound,playAttackSound,playDamageSound,playDirectDamageSound,playFullBlockSound,playKnifeSound,playMysticSound,playShieldSound,playHealSound,playChargeSound,playRevealSound,playVictorySound,playGameOverSound,hapticFeedback,showFloatingText,triggerScreenShake,flashScreen,flashChargedAbility,setSoundEnabled,setVibrationEnabled,isSoundEnabled,isVibrationEnabled,updateSettingsUI});

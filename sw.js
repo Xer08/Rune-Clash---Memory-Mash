@@ -1,10 +1,10 @@
-const VERSION = "19";
+const VERSION = "20";
 const CACHE_NAME = `rune-clash-v${VERSION}`;
 const ASSETS = [
   "./", "./index.html", "./manifest.json",
-  "./css/theme.css?v=19", "./css/board.css?v=19", "./css/effects.css?v=19",
-  "./js/state.js?v=19", "./js/juiciness.js?v=19", "./js/combat.js?v=19", "./js/hero.js?v=19",
-  "./js/board.js?v=19", "./js/dungeon.js?v=19", "./js/main.js?v=19",
+  "./css/theme.css?v=20", "./css/board.css?v=20", "./css/effects.css?v=20",
+  "./js/state.js?v=20", "./js/juiciness.js?v=20", "./js/combat.js?v=20", "./js/hero.js?v=20",
+  "./js/board.js?v=20", "./js/dungeon.js?v=20", "./js/main.js?v=20",
   "./icon-192.png", "./icon-512.png"
 ];
 
